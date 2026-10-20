@@ -62,13 +62,14 @@ More: [docs/principles.md](docs/principles.md) and [docs/workflow.md](docs/workf
 | Path | What |
 |---|---|
 | [`claude/CLAUDE.md`](claude/CLAUDE.md) | Global baseline (`~/.claude/CLAUDE.md`): pulls in the rules with `@` imports |
-| [`claude/rules/`](claude/rules) | Architect Protocol v3.1, Dev_Handover Protocol, Aura UI manifesto v2 |
+| [`claude/rules/`](claude/rules) | Working Agreement v4 (`project-rules.md`), Dev_Handover Protocol, Aura UI manifesto v2 |
 | [`claude/settings.example.json`](claude/settings.example.json) | Cleaned-up `settings.json`: hooks, statusline, askpass, plugin |
 | [`skills/`](skills) | Own skills: `architect-protocol`, `dev-handover`, `aura-ui`, `ubuntu`, `gnome-extension-dev` |
 | [`plugins/`](plugins) | Plugin marketplace `agentic-ubuntu`: the `selkea` mod (more readable transcript) |
 | [`machine/`](machine) | Shared `~/.cargo/config.toml` (sccache + mold) and `sudo-askpass` (yad) |
-| [`templates/`](templates) | Empty `.ai_context_state.md` template |
-| [`install.sh`](install.sh) | Copies the rules and skills into `~/.claude` (dry run by default) |
+| [`templates/`](templates) | Empty `.ai_context_state.md` and the per-repo `aura-context` skill |
+| [`docs/history/`](docs/history) | The original Architect Protocol v3.1, written for Gemini CLI |
+| [`install.sh`](install.sh) | Symlinks or copies the rules and skills into `~/.claude` (dry run by default) |
 | [`docs/`](docs) | Principles, workflow, machine, hooks |
 
 ## Rules vs. skills
@@ -98,7 +99,8 @@ Some of Anthropic's built-in skills are used too (e.g. `docs`, `skill-creator`,
 git clone https://github.com/UnderStackDev/agentic-ubuntu ~/Projects/agentic-ubuntu
 cd ~/Projects/agentic-ubuntu
 ./install.sh          # shows what it would do
-./install.sh --apply  # copies (existing files are backed up with a .bak suffix)
+./install.sh --link   # symlinks, so the repo stays the only source (old files go to ~/.claude/backups/)
+./install.sh --apply  # or copies instead
 ```
 
 Then:

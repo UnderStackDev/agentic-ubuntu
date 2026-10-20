@@ -1,15 +1,17 @@
 # Principles
 
 Full text: [`claude/rules/project-rules.md`](../claude/rules/project-rules.md)
-(Architect Protocol v3.1). This is a summary with the reasons behind it.
+(Working Agreement v4). This is a summary with the reasons behind it. The same
+file is the `PROJECT RULES.md` of every Aura repo.
 
-## A note on the Architect Protocol
+## Where it came from
 
-The protocol was written for Gemini CLI, which needed a short leash: it drifted,
-made "improvements" nobody asked for and patched over errors. Hence the blunt
-"Dictator & Architect / Servant" wording. With Claude Code the protocol is only the
-baseline; the [skills](../skills) loosen it, and the agent is trusted to use
-judgement on technical matters.
+The first version, the [Architect Protocol v3.1](history/architect-protocol-v3.1.md),
+was written for Gemini CLI, which needed a short leash: it drifted, made
+"improvements" nobody asked for and patched over errors. Hence its blunt
+"Dictator & Architect / Servant" wording. The Working Agreement v4 keeps what
+worked (plan first, small modules, honest errors, handover) and describes the
+roles as they really are.
 
 ## 1. Roles
 
@@ -71,10 +73,16 @@ styles.
 
 ## 8. Local first
 
-Work is done locally and committed while iterating. Pushes and releases happen
-only when the user says the work is done.
+Work is done locally and committed while iterating. In app repos, pushes and
+releases happen only when the user says the work is done. In docs and config repos
+(like this one) a push can be part of an approved plan.
 
-## 9. Sign-off
+## 9. Reports in plain language
+
+Every report ends with "What you'll see": what changed from the user's point of
+view and how to try it. The user judges the result, not the diff.
+
+## 10. Sign-off
 
 Every agent report ends with a sign-off (*– Claude Ubuntu Linux*). When several
 agents and machines work on the same projects (Claude Code, Gemini CLI, Codex;

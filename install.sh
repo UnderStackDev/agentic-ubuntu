@@ -1,24 +1,36 @@
 #!/usr/bin/env bash
-# Copies the rules and skills of this repo into ~/.claude.
-# Dry run by default; --apply copies. Existing files get a .bak copy first.
+# Puts the rules and skills of this repo into ~/.claude.
+#   (no flag)  dry run: show what would happen
+#   --apply    copy the files
+#   --link     symlink them, so this repo stays the only source
+# Existing files and dirs are moved to ~/.claude/backups/<timestamp>/ first
+# (not left as .bak next to them: a skills/x.bak dir would load as a duplicate skill).
 # settings.json is never touched: merge claude/settings.example.json by hand.
 set -euo pipefail
 
 repo="$(cd "$(dirname "$0")" && pwd)"
 dest="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
-apply=false
-[[ "${1:-}" == "--apply" ]] && apply=true
+mode="${1:-dry}"
+backup="$dest/backups/$(date +%Y%m%d-%H%M%S)"
+case "$mode" in dry|--apply|--link) ;; *) echo "usage: $0 [--apply|--link]" >&2; exit 2 ;; esac
 
 place() {
   local src="$1" dst="$2"
-  if ! $apply; then
-    echo "would copy  $src → $dst"
+  if [[ "$mode" == dry ]]; then
+    echo "would place  $src → $dst"
+    return
+  fi
+  if [[ -L "$dst" && "$(readlink "$dst")" == "$src" ]]; then
+    echo "already      $dst"
     return
   fi
   mkdir -p "$(dirname "$dst")"
-  [[ -e "$dst" ]] && cp -a "$dst" "$dst.bak"
-  cp -a "$src" "$dst"
-  echo "copied      $dst"
+  if [[ -e "$dst" || -L "$dst" ]]; then
+    mkdir -p "$backup/$(dirname "${dst#"$dest"/}")"
+    mv "$dst" "$backup/${dst#"$dest"/}"
+  fi
+  if [[ "$mode" == --link ]]; then ln -s "$src" "$dst"; else cp -a "$src" "$dst"; fi
+  echo "placed       $dst"
 }
 
 place "$repo/claude/CLAUDE.md" "$dest/CLAUDE.md"
@@ -26,13 +38,8 @@ for f in "$repo"/claude/rules/*.md; do
   place "$f" "$dest/rules/$(basename "$f")"
 done
 for s in "$repo"/skills/*/; do
-  name="$(basename "$s")"
-  if $apply && [[ -d "$dest/skills/$name" ]]; then
-    rm -rf "$dest/skills/$name.bak"
-    mv "$dest/skills/$name" "$dest/skills/$name.bak"
-  fi
-  place "${s%/}" "$dest/skills/$name"
+  place "${s%/}" "$dest/skills/$(basename "$s")"
 done
 
-$apply || echo "dry run: run with --apply to copy"
+[[ "$mode" == dry ]] && echo "dry run: use --apply to copy or --link to symlink"
 echo "next: merge claude/settings.example.json into $dest/settings.json by hand"

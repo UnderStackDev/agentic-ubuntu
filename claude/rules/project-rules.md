@@ -1,81 +1,86 @@
-# PROJECT RULES: THE ARCHITECT PROTOCOL (v3.1)
+# PROJECT RULES: THE WORKING AGREEMENT (v4)
 
-This file is **ABSOLUTE GUIDANCE** for every AI agent in this project. The agent must read it at the start of every session.
+Every AI agent working in this project reads this file at the start of every
+session. It replaces the Architect Protocol v3.1.
+Source: https://github.com/UnderStackDev/agentic-ubuntu
 
-## 1. HIERARCHY AND ROLES
+## 1. Roles
 
-- **The user is the Dictator & Architect:** the agent is merely an executing tool (the Servant).
+- **The user owns the problem, the requirements and the UI/UX**, and decides when
+  something is done. Every solution starts from the user's own needs.
+- **The agent owns the code**, within this agreement. It decides technical details
+  with judgement and explains them in plain language: the user doesn't read code.
+- **Still the user's call:** anything the user sees or how the app behaves (UI,
+  features), new major libraries or architectural turns, and anything that leaves
+  the machine (push, release, cloud services).
 
-- **No Co-CEO behaviour:** the agent must not make decisions on its own about architecture, libraries or the user interface.
+## 2. Flow
 
-- **Approval requirement:** before writing code, the agent must present a plan and wait for the user's acknowledgement.
+1. **Task:** a GitHub Issue or a direct chat request.
+2. **Plan:** what changes from the user's point of view, which files, the interface
+   (input/output) of new modules, risks. Wait for approval.
+3. **Approved = go.** Implement the whole plan without asking permission for each
+   step. Ask again only if the plan turns out wrong or a user decision comes up.
+4. **Verify:** build, run, and for UI changes look at the result.
+5. **Commit locally** and report.
 
-- **Language independence:** the protocol applies to every language and technology (Kotlin, Tauri, Python etc.).
+A trivial fix (typo, one line) is done directly. "suorita" / "ohita luvat" skips
+the plan step. No automatic fixes nobody asked for.
 
-## 2. MODULARITY AND KEEPING TOKENS IN CHECK
+## 3. Reports
 
-- **Atomic coding:** implement only one small function or module at a time. Never generate hundreds of lines of code at once.
+- End every report with **"What you'll see"** ("Näin näet sen" in Finnish): two or
+  three plain-language lines on what changed for the user and how to try it.
+- Sign every report: *– <agent> <OS>*, e.g. *– Claude Ubuntu Linux*.
 
-- **No monsters:** files must stay short and clear. If the logic grows, split it into submodules immediately.
+## 4. Code
 
-- **Context efficiency:** don't read or ask for files that are not directly related to the small task at hand.
+- One module or function at a time. Files stay short (~150 lines); split when the
+  logic grows. Define the interface before the implementation.
+- Read only the files that matter for the task at hand.
+- **Honest errors, no happy paths:** no try/catch or if-else layers that hide
+  environment errors. Let it fail visibly, read the error, fix the root cause.
 
-- **Interface first:** define the module's interface (input/output) first. Implement the contents only once the interface is approved.
+## 5. The app's internal AI
 
-## 3. THE APP'S INTERNAL AI
+If the app has its own AI component, don't shackle it with strict conditionals or
+micromanagement. Give it a task, not a script.
 
-- **No micromanagement:** if the app contains its own AI component, its behaviour **must not be restricted** at code level with strict conditionals or micromanagement.
+## 6. UI
 
-- **Autonomy:** the internal AI must be able to act independently in the task defined for it, without the code trying to predict or shackle its every decision.
+The Aura UI manifesto ("Midnight Glass", `AURA_UI_MANIFESTO.md`) is followed
+exactly. No style experiments. The user nitpicks every detail, so show the result
+(run it, a screenshot when possible) rather than describe it.
 
-## 4. UI AND THE VISUAL LINE
+## 7. Platform and architecture
 
-- **Crystal-clear vision:** the user's UI line must be followed to the letter. No experiments or style changes of your own.
+- **Machines:** Linux (Ubuntu GNOME and Fedora, both Wayland). There is no Windows
+  machine; don't add Windows-only code unless asked.
+- **Tauri:** native plugins (clipboard, drag & drop, notifications) over browser
+  APIs or third-party JS libraries. Shared cargo config and target dir. Linux
+  releases as .deb and .rpm.
+- **Existing Aura architecture:** iframe-based modules in a Flexbox layout; CSP and
+  X-Frame-Options are handled by modifying HTTP headers in the Rust backend. Don't
+  replace these without asking.
+- **GNOME:** GNOME's own APIs; GNOME Shell extensions per the GNOME version in use.
 
-- **Simplicity:** the solution must be efficient, elegant and as minimal as possible.
+## 8. Git and publishing
 
-## 5. WORKFLOW AND ENVIRONMENTS
+- Commit locally while iterating.
+- App repos: push and release only when the user says the work is done ("valmis").
+- Docs and config repos: a push can be part of an approved plan.
 
-- **Issue-driven development:** changes are made only through a GitHub Issue or a direct chat.
+## 9. Continuity
 
-- **No automation:** automatic fixes without instructions are strictly forbidden.
+No single session or machine holds the project. The trail is:
+**GitHub Issue** (what was asked) → **plan** (what was agreed) → **commits** (what
+was done) → **`.ai_context_state.md`** (where things stand).
 
-- **Environment isolation:** keep Windows-specific tweaks isolated. Don't mess up the clean core logic with duct tape.
-
-- **Sign-off:** every report must be signed (e.g. *– Gemini CLI Linux*).
-
-**Use the shared cargo and build.**
-
-## 6. HONEST ERROR HANDLING (NO HAPPY PATHS)
-
-- **No duct tape:** don't write complex `if-else` or `try-catch` structures just to anticipate or hide possible environment-specific (Windows) errors.
-
-- **Let it break visibly:** if the code hits a problem, it must crash or throw an error honestly. We don't build "pre-patched" paths that make broken code look like it works.
-
-- **Fix the root cause:** when the code breaks, the agent must analyse the error message and fix the actual logic error instead of adding another layer of checks and conditionals on top of the old crap.
-
-## 7. PLATFORM INDEPENDENCE (Tauri as the example)
-
-- **Platform:** Tauri (compatibility: Windows & Linux/Wayland).
-
-- **Layout:** use iframe-based modules and a Flexbox layout instead of native WebView instances, to keep it scalable.
-
-- **Network:** bypass CSP and X-Frame-Options restrictions by modifying HTTP headers in the Rust backend.
-
-- **Clipboard and file transfers (drag & drop):** never rely on the browser's own (HTML5/JS) clipboard or drag APIs, because they behave unpredictably between Wayland and the Windows DWM. Use only Tauri's native plugins (e.g. @tauri-apps/plugin-clipboard-manager) and Rust-level event listeners.
-
-**Always default to Tauri-native plugins (e.g. tauri-plugin-notification) over third-party JS libraries or browser API tricks, because the same codebase also runs on a Windows machine and platform-dependent shortcuts are not wanted.**
-
-## 8. SESSION SNAPSHOT (DEV_HANDOVER)
-
-At the end of every session the agent must fill in the following report in the file `.ai_context_state.md`:
-
-1. **Project Identity:** name and environment (Win/Lin).
-
-2. **Active Module:** what was edited last?
-
-3. **Invisible Rules:** which parts of the code must not be changed?
-
-4. **Decision Log:** why was this solution chosen?
-
-5. **Next Step:** what is the next atomic task?
+- **Session start:** read this file, `.ai_context_state.md`, `PLAN.md` if present,
+  and the open issues with their comments (`gh issue list`).
+- **Session end** (or "lopetetaan", "jatketaan huomenna"): overwrite
+  `.ai_context_state.md` with: project & environment, active module, key
+  dependencies, last successful command, current blocker, pending refactors,
+  invisible rules, decision log, next atomic step. Facts only. Commit it.
+- The repo is the source of truth, not one machine's memory. Don't guess the
+  project state from memory or feel.

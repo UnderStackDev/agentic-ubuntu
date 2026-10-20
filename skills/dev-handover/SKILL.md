@@ -14,7 +14,8 @@ Goal: the next session (any agent) gets the state in ~500–1000 tokens instead 
 re-reading the codebase. Full protocol: `~/.claude/rules/dev-handover.md`.
 
 **Session start:** if the project root has `.ai_context_state.md`, read it (and
-`PROJECT RULES.md`, `PLAN.md` if present) before anything else.
+`PROJECT RULES.md`, `PLAN.md` if present) before anything else, then the open
+issues with comments (`gh issue list`).
 
 **Session end:** overwrite `.ai_context_state.md` with the current state. Keep it
 terse; facts, paths and commands, no prose. Then commit it with the work (local
@@ -27,6 +28,7 @@ commit, no push unless asked).
 - Project: <name>
 - OS: Linux (Ubuntu 26.10, GNOME 51, Wayland, zsh)
 - Last commit: <short hash> <subject>
+- Active issue: <#number title, or "none">
 - Critical paths: <dirs/files>
 
 ## 2. State of Architecture
