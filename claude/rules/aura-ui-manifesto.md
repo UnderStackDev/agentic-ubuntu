@@ -1,25 +1,25 @@
-# AURA UI-MANIFESTO v2 — "Midnight Glass"
+# AURA UI MANIFESTO v2 — "Midnight Glass"
 
-Aura-ekosysteemin visuaalinen kieli on **hiljainen, tumma ja lasistilainen** — ei cyberpunk, ei neon. Tunnelma on kuin pimeä talviyö: syvä tausta, lasi-efektit, yksi hillitty korostusväri (Soft Lilac). Fallback-palettina toimii **Catppuccin Mocha**, jonka värit sopivat täydellisesti Aura-taustakerrostuksen kanssa.
+The visual language of the Aura ecosystem is **quiet, dark and glassy**: not cyberpunk, not neon. The mood is a dark winter night: a deep background, glass effects and a single restrained accent colour (Soft Lilac). The fallback palette is **Catppuccin Mocha**, whose colours sit well on top of the Aura background layers.
 
 ---
 
-## 1. CSS-muuttujat — kanoninen setti
+## 1. CSS variables — the canonical set
 
-Nämä muuttujat on pakollinen jokaisessa Aura-sovelluksessa. Käytä näitä nimiä — älä keksi uusia variantteja.
+These variables are mandatory in every Aura app. Use these names and don't invent new variants.
 
 ```css
 :root {
-  /* ── Taustat ──────────────────────────────────────── */
-  --midnight:      rgba(10, 10, 15, 0.97);   /* Sovellusikkuna, opaque tila */
-  --glass:         rgba(30, 30, 45, 0.60);   /* Kelluvat paneelit = CTP Base */
+  /* ── Backgrounds ──────────────────────────────────── */
+  --midnight:      rgba(10, 10, 15, 0.97);   /* App window, opaque state */
+  --glass:         rgba(30, 30, 45, 0.60);   /* Floating panels = CTP Base */
   --glass-border:  rgba(255, 255, 255, 0.08);
 
-  /* ── Korostusväri ─────────────────────────────────── */
+  /* ── Accent ───────────────────────────────────────── */
   --soft-lilac:    #B6A1E5;
   --accent-glow:   rgba(182, 161, 229, 0.40);
 
-  /* ── Teksti ───────────────────────────────────────── */
+  /* ── Text ─────────────────────────────────────────── */
   --text-main:     #ffffff;
   --text-muted:    #9999aa;
 
@@ -27,24 +27,24 @@ Nämä muuttujat on pakollinen jokaisessa Aura-sovelluksessa. Käytä näitä ni
 }
 ```
 
-### Catppuccin Mocha — semanttiset fallback-värit
+### Catppuccin Mocha — semantic fallback colours
 
-Käytä näitä kun tarvitaan lisävärejä (varoitukset, tilavärit, diagnostiikka). Älä lisää ylimääräisiä `--ctp-*`-muuttujia varsinaiseen tuotantokoodiin — käytä suoraan hex-arvoja viitepalettina.
+Use these when extra colours are needed (warnings, status colours, diagnostics). Don't add extra `--ctp-*` variables to production code; use the hex values directly, with this table as the reference palette.
 
-| Rooli          | Catppuccin-nimi | Hex       | Käyttö                          |
+| Role           | Catppuccin name | Hex       | Use                              |
 |----------------|-----------------|-----------|----------------------------------|
-| Base           | Base            | `#1e1e2e` | Lasiselementtien viitesävy       |
-| Kohoelementti  | Surface0        | `#313244` | Hover-taustat syvemmissä paneeleissa |
-| Teksti         | Subtext0        | `#a6adc8` | Viiteväri `--text-muted`:lle    |
-| Pääkorostus    | Mauve           | `#cba6f7` | Lähisukulainen `--soft-lilac`:lle |
-| Virhe          | Red             | `#f38ba8` | Destruktiiviset toiminnot        |
-| Menestys       | Green           | `#a6e3a1` | Onnistumistilat                  |
-| Varoitus       | Peach           | `#fab387` | Varoitukset                      |
-| Info           | Blue            | `#89b4fa` | Neutraalit infoelementit         |
+| Base           | Base            | `#1e1e2e` | Reference shade for glass elements |
+| Raised         | Surface0        | `#313244` | Hover backgrounds in deeper panels |
+| Text           | Subtext0        | `#a6adc8` | Reference for `--text-muted`     |
+| Main accent    | Mauve           | `#cba6f7` | Close relative of `--soft-lilac` |
+| Error          | Red             | `#f38ba8` | Destructive actions              |
+| Success        | Green           | `#a6e3a1` | Success states                   |
+| Warning        | Peach           | `#fab387` | Warnings                         |
+| Info           | Blue            | `#89b4fa` | Neutral info elements            |
 
 ---
 
-## 2. Typografia
+## 2. Typography
 
 ```css
 * {
@@ -57,21 +57,21 @@ Käytä näitä kun tarvitaan lisävärejä (varoitukset, tilavärit, diagnostii
 *::-webkit-scrollbar { display: none; }
 ```
 
-### Tekstihierarkia
+### Text hierarchy
 
-| Tyyli                   | Koko  | Paino | Muuntelu                | Välistys | Käyttö                        |
-|-------------------------|-------|-------|-------------------------|----------|-------------------------------|
-| Otsikko / section-label | 11px  | 800   | `uppercase`             | 1.5px    | Sidebar-otsikot, titlebaret   |
-| Kapiteeli / meta        | 10px  | 700   | `uppercase`             | 1.2px    | Kenttäotsikot, päivämäärät    |
-| Leipäteksti             | 13-14px | 400 | —                       | —        | Yleinen sisältö               |
-| Pienikokoinen teksti    | 12px  | 400   | —                       | —        | Aikaleimat, meta-info         |
-| Modal-otsikko           | 19px  | 700   | letter-spacing: -0.2px  | —        | Event-title, modal pääotsikko |
+| Style                   | Size  | Weight | Transform              | Spacing  | Use                           |
+|-------------------------|-------|--------|------------------------|----------|-------------------------------|
+| Heading / section label | 11px  | 800    | `uppercase`            | 1.5px    | Sidebar headings, titlebars   |
+| Small caps / meta       | 10px  | 700    | `uppercase`            | 1.2px    | Field labels, dates           |
+| Body text               | 13-14px | 400  | —                      | —        | General content               |
+| Small text              | 12px  | 400    | —                      | —        | Timestamps, meta info         |
+| Modal title             | 19px  | 700    | letter-spacing: -0.2px | —        | Event title, main modal title |
 
 ---
 
-## 3. Glassmorphism-rakenteet
+## 3. Glassmorphism structures
 
-### Kelluva paneeli
+### Floating panel
 
 ```css
 .aura-panel {
@@ -120,7 +120,7 @@ Käytä näitä kun tarvitaan lisävärejä (varoitukset, tilavärit, diagnostii
 }
 ```
 
-### Input-kentät
+### Input fields
 
 ```css
 .aura-input {
@@ -142,20 +142,20 @@ Käytä näitä kun tarvitaan lisävärejä (varoitukset, tilavärit, diagnostii
 
 ---
 
-## 4. Nappisysteemi — KANONINEN RAKENNE
+## 4. Button system — CANONICAL STRUCTURE
 
-> **Sääntö: Soft Lilac -taustaa (`background: var(--soft-lilac)`) ei käytetä koskaan interaktiivisissa napeissa.** Korostusväri esiintyy ainoastaan reunaviivana, tekstivärinä ja hoverilla kevyenä tintinä.
+> **Rule: a Soft Lilac background (`background: var(--soft-lilac)`) is never used on interactive buttons.** The accent colour appears only as a border, as text colour and as a light tint on hover.
 
-### btn-accent — päätoimintonappi
+### btn-accent — primary action
 
-CTA-napit, tallennusnapit, kirjautumisnapit, modalien vahvistusnapit.
+CTA buttons, save buttons, sign-in buttons, modal confirm buttons.
 
 ```css
 .btn-accent {
   background:      transparent;
   color:           var(--soft-lilac);
   border:          1px solid rgba(182, 161, 229, 0.35);
-  border-radius:   8px;       /* pill-muodolle: 50px */
+  border-radius:   8px;       /* pill shape: 50px */
   padding:         10px 28px;
   font-size:       12px;
   font-weight:     700;
@@ -176,9 +176,9 @@ CTA-napit, tallennusnapit, kirjautumisnapit, modalien vahvistusnapit.
 }
 ```
 
-### btn-ghost — toissijainen / navigaationappi
+### btn-ghost — secondary / navigation
 
-Peruutusnapit, sivunapit, toolbar-klikattavat kohteet.
+Cancel buttons, page buttons, clickable toolbar items.
 
 ```css
 .btn-ghost {
@@ -199,14 +199,14 @@ Peruutusnapit, sivunapit, toolbar-klikattavat kohteet.
 }
 ```
 
-### btn-danger — destruktiivinen toiminto
+### btn-danger — destructive action
 
-Poistonapit, peruuttamattomat toiminnot.
+Delete buttons, irreversible actions.
 
 ```css
 .btn-danger {
   background:   transparent;
-  color:        rgba(243, 139, 168, 0.65);   /* CTP Red, himmennetty */
+  color:        rgba(243, 139, 168, 0.65);   /* CTP Red, dimmed */
   border:       1px solid rgba(243, 139, 168, 0.22);
   border-radius: 8px;
   padding:      10px 18px;
@@ -225,12 +225,12 @@ Poistonapit, peruuttamattomat toiminnot.
 }
 ```
 
-### Titlebar-kontrollinapit (min/max/close)
+### Titlebar control buttons (min/max/close)
 
 ```css
 .titlebar-btn {
   width:        44px;
-  height:       40px;           /* sama korkeus kuin titlebar */
+  height:       40px;           /* same height as the titlebar */
   background:   transparent;
   border:       none;
   color:        var(--text-muted);
@@ -245,7 +245,7 @@ Poistonapit, peruuttamattomat toiminnot.
 .titlebar-btn--close:hover { background: rgba(220, 38, 38, 0.85);  color: #fff; }
 ```
 
-### Toolbar-pyöreät ikonit (floating toolbar, sidebar-ikonit)
+### Round toolbar icons (floating toolbar, sidebar icons)
 
 ```css
 .float-btn {
@@ -265,25 +265,25 @@ Poistonapit, peruuttamattomat toiminnot.
 .float-btn.active { background: rgba(182, 161, 229, 0.12); color: var(--soft-lilac); }
 ```
 
-### Indikaattorit — sallittu solid-käyttö
+### Indicators — allowed solid use
 
-Pienet staattiset indikaattorit (dot, badge, "today"-numero) SAA värittää solidilla lila-taustalla:
+Small static indicators (dot, badge, "today" number) MAY use a solid lilac background:
 
 ```css
-/* Nykyinen päivä kalenterissa */
+/* Current day in the calendar */
 .day-number.is-today {
   background:   var(--soft-lilac);
   color:        rgba(10, 10, 20, 0.9);
   border-radius: 50%;
 }
 
-/* Toggle-indikaattorin aktiivitila */
+/* Active state of a toggle indicator */
 .toggle-indicator.active {
   background:   var(--soft-lilac);
   border-color: var(--soft-lilac);
 }
 
-/* Kategoriadotti (lista) */
+/* Category dot (list) */
 .category-dot {
   width:        6px;
   height:       6px;
@@ -295,9 +295,9 @@ Pienet staattiset indikaattorit (dot, badge, "today"-numero) SAA värittää sol
 
 ---
 
-## 5. Värillistä korostusviiva (Accent Line) — VAKIOKÄYTÄNTÖ
+## 5. Coloured accent line — STANDARD PRACTICE
 
-Kaikissa listakorteissa ja tapahtuma-elementeissä käytetään gradient-reunaviivaa:
+Every list card and event element uses a gradient edge line:
 
 ```css
 .list-item {
@@ -323,32 +323,32 @@ Kaikissa listakorteissa ja tapahtuma-elementeissä käytetään gradient-reunavi
   transition: opacity 0.25s ease;
 }
 
-/* Pois päältä */
+/* Off */
 .list-item.is-off::before { opacity: 0.20; }
 /* Hover */
 .list-item:hover::before  { opacity: 0.90; }
 ```
 
-Kalenteri-/kategoriavärillisten elementtien väri asetetaan inline-CSS:llä:
+The colour of calendar- or category-coloured elements is set with inline CSS:
 ```html
 <div class="list-item" style="--cal-color: #4285f4">...</div>
 ```
 
-**Ei koskaan:** kiinteää väripalkkia, `box-shadow`-hehkua tai `border-left` -ratkaisua.
+**Never:** a solid colour bar, a `box-shadow` glow or a `border-left` solution.
 
 ---
 
-## 6. Ikonit — Lucide-politiikka
+## 6. Icons — Lucide policy
 
-### Sallittu — toimintonapit
+### Allowed — action buttons
 
-Lucide (tai vastaava inline-SVG) on OK näissä:
-- Titlebarin ohjausnapit (close, minimize, maximize)
-- Asetukset-gear-ikoni
-- Action-ikonit modaleissa (edit, trash, link — pienet `em-btn`-tyyppiset napit)
+Lucide (or equivalent inline SVG) is fine for:
+- Titlebar control buttons (close, minimize, maximize)
+- The settings gear icon
+- Action icons in modals (edit, trash, link — small `em-btn` style buttons)
 
 ```css
-/* Lucide-ikonin standardikoko toimintonapeissa */
+/* Standard Lucide icon size in action buttons */
 [data-lucide] {
   width:         16px;
   height:        16px;
@@ -361,34 +361,34 @@ Lucide (tai vastaava inline-SVG) on OK näissä:
 }
 ```
 
-### Kielletty — datasisältö ja listat
+### Forbidden — data content and lists
 
-**Lucide-ikonia ei käytetä datarivin eteen dekoratiivisena prefiksiksi.** Tämä koskee:
-- Sääsovelluksen metririvit (`thermometer`, `wind`, `droplets` jne.)
-- Agendalistat ja tietopaneelit
-- Asetuspaneelin kenttäotsikot
+**A Lucide icon is never used as a decorative prefix in front of a data row.** This applies to:
+- Metric rows in the weather app (`thermometer`, `wind`, `droplets` etc.)
+- Agenda lists and info panels
+- Field labels in the settings panel
 
-**Sijaan käytetään:**
+**Use instead:**
 
 ```html
-<!-- Ei näin -->
+<!-- Not like this -->
 <span class="metric-label"><i data-lucide="thermometer"></i> Feels like</span>
 
-<!-- Näin: pelkkä tekstitunniste -->
+<!-- Like this: a plain text label -->
 <span class="metric-label">Feels like</span>
 
-<!-- Tai: Unicode-merkki kun visuaalinen erottelu tarpeen -->
+<!-- Or: a Unicode character when visual separation is needed -->
 <span class="metric-label">↗ Wind</span>
 <span class="metric-label">· Humidity</span>
 ```
 
-Datarivissä arvo on tärkeämpi kuin ikoni — ikoni ei lisää informaatiota.
+In a data row the value matters more than an icon; the icon adds no information.
 
 ---
 
-## 7. Interaktiot & animaatiot
+## 7. Interactions & animations
 
-### Hover-efektit korteissa
+### Hover effects on cards
 
 ```css
 .aura-card {
@@ -400,7 +400,7 @@ Datarivissä arvo on tärkeämpi kuin ikoni — ikoni ei lisää informaatiota.
 }
 ```
 
-### Modal sisääntulo (alhaalta ylös)
+### Modal entrance (bottom up)
 
 ```css
 @keyframes aura-slide-in {
@@ -412,7 +412,7 @@ Datarivissä arvo on tärkeämpi kuin ikoni — ikoni ei lisää informaatiota.
 }
 ```
 
-### Poistonapit (piilotettu, hover-ilmestyvä)
+### Delete buttons (hidden, appear on hover)
 
 ```css
 .delete-btn {
@@ -431,9 +431,9 @@ Datarivissä arvo on tärkeämpi kuin ikoni — ikoni ei lisää informaatiota.
 
 ---
 
-## 8. Komponentit
+## 8. Components
 
-### Confirm-modal
+### Confirm modal
 
 ```css
 .confirm-card {
@@ -450,10 +450,10 @@ Datarivissä arvo on tärkeämpi kuin ikoni — ikoni ei lisää informaatiota.
   letter-spacing: 2px;
   color:          var(--soft-lilac);
 }
-/* Napit: käytä .btn-accent (OK), .btn-danger (Poista), .btn-ghost (Peruuta) */
+/* Buttons: use .btn-accent (OK), .btn-danger (Delete), .btn-ghost (Cancel) */
 ```
 
-### Custom Select
+### Custom select
 
 ```css
 .cs-trigger {
@@ -480,7 +480,7 @@ Datarivissä arvo on tärkeämpi kuin ikoni — ikoni ei lisää informaatiota.
 }
 ```
 
-### View Tabs (segmented control)
+### View tabs (segmented control)
 
 ```css
 #view-tabs {
@@ -516,10 +516,10 @@ Datarivissä arvo on tärkeämpi kuin ikoni — ikoni ei lisää informaatiota.
 
 ---
 
-## 9. Chat / viestit
+## 9. Chat / messages
 
 ```css
-/* Käyttäjän viesti */
+/* User message */
 .msg-user {
   align-self:    flex-end;
   background:    rgba(182, 161, 229, 0.10);
@@ -528,7 +528,7 @@ Datarivissä arvo on tärkeämpi kuin ikoni — ikoni ei lisää informaatiota.
   color:         var(--text-main);
 }
 
-/* AI / järjestelmä */
+/* AI / system */
 .msg-system {
   align-self:    flex-start;
   background:    rgba(255, 255, 255, 0.03);
@@ -540,18 +540,18 @@ Datarivissä arvo on tärkeämpi kuin ikoni — ikoni ei lisää informaatiota.
 
 ---
 
-## 10. Käyttöohje — uusi projekti
+## 10. How to use — new project
 
-Liitä tämä manifesto chattiin ja käytä komentoa:
+Paste this manifesto into the chat and use the prompt:
 
-> *"Rakenna käyttöliittymä AURA UI-MANIFESTO v2:n mukaisesti. Tyyli: Midnight Glass, Catppuccin Mocha fallback-paletti. Napeissa käytetään ainoastaan btn-accent / btn-ghost / btn-danger -luokkia — ei solid soft-lilac -taustoja. Lucide-ikoneja vain toimintonapeissa, ei datasisällössä."*
+> *"Build the UI according to AURA UI MANIFESTO v2. Style: Midnight Glass, Catppuccin Mocha fallback palette. Buttons use only the btn-accent / btn-ghost / btn-danger classes — no solid soft-lilac backgrounds. Lucide icons only on action buttons, never in data content."*
 
-### Muistilista tarkistukseen
+### Review checklist
 
-- [ ] Kaikki interaktiiviset napit käyttävät `btn-accent`, `btn-ghost` tai `btn-danger` -rakennetta (transparent background)
-- [ ] `background: var(--soft-lilac)` esiintyy vain staattisissa indikaattoreissa (today-numero, toggle, dot)
-- [ ] Lucide-ikoneja EI ole datalistossa tai metririvien edessä
-- [ ] Listaelementeissä on gradient `::before` accent-line (ei `border-left`)
-- [ ] Scrollbarit piilotettu (`scrollbar-width: none`)
-- [ ] Kanoninen muuttujasetti käytössä (ei `--accent`, `--bg-primary` yms. omia nimiä)
-- [ ] Fontti: Segoe UI Variable / Inter / Ubuntu / Cantarell -stack
+- [ ] All interactive buttons use the `btn-accent`, `btn-ghost` or `btn-danger` structure (transparent background)
+- [ ] `background: var(--soft-lilac)` appears only on static indicators (today number, toggle, dot)
+- [ ] NO Lucide icons in data lists or in front of metric rows
+- [ ] List items have the gradient `::before` accent line (not `border-left`)
+- [ ] Scrollbars hidden (`scrollbar-width: none`)
+- [ ] Canonical variable set in use (no home-made names like `--accent`, `--bg-primary`)
+- [ ] Font: Segoe UI Variable / Inter / Ubuntu / Cantarell stack

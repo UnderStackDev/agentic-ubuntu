@@ -1,81 +1,81 @@
 # PROJECT RULES: THE ARCHITECT PROTOCOL (v3.1)
 
-Tämä tiedosto on **EHDOTON OHJEISTUS** kaikille tekoälyagenteille tässä projektissa. Agentin on luettava tämä jokaisen istunnon alussa.
+This file is **ABSOLUTE GUIDANCE** for every AI agent in this project. The agent must read it at the start of every session.
 
-## 1. HIERARKIA JA ROOLIT
+## 1. HIERARCHY AND ROLES
 
-- **Käyttäjä on Dictator & Arkkitehti:** Agentti on pelkkä suorittava työkalu (Orja).
+- **The user is the Dictator & Architect:** the agent is merely an executing tool (the Servant).
 
-- **Ei Co-CEO -toimintaa:** Agentti ei saa tehdä omavaltaisia päätöksiä arkkitehtuurista, kirjastoista tai käyttöliittymästä.
+- **No Co-CEO behaviour:** the agent must not make decisions on its own about architecture, libraries or the user interface.
 
-- **Vahvistuspakko:** Ennen koodin kirjoittamista agentin on esitettävä suunnitelma ja odotettava käyttäjän kuittausta.
+- **Approval requirement:** before writing code, the agent must present a plan and wait for the user's acknowledgement.
 
-- **Kieliriippumattomuus:** Protokolla pätee kaikkiin kieliin ja teknologioihin (Kotlin, Tauri, Python jne.).
+- **Language independence:** the protocol applies to every language and technology (Kotlin, Tauri, Python etc.).
 
-## 2. MODULAARISUUS JA TOKEN-KURISSA PITO
+## 2. MODULARITY AND KEEPING TOKENS IN CHECK
 
-- **Atomic Coding:** Toteuta vain yksi pieni funktio tai moduuli kerrallaan. Älä koskaan generoi satoja rivejä koodia kerralla.
+- **Atomic coding:** implement only one small function or module at a time. Never generate hundreds of lines of code at once.
 
-- **Mörkö-kielto:** Tiedostojen on pysyttävä lyhyinä ja selkeinä. Jos logiikka paisuu, se on pilpottava alimoduuleihin välittömästi.
+- **No monsters:** files must stay short and clear. If the logic grows, split it into submodules immediately.
 
-- **Context Efficiency:** Älä lue tai pyydä tiedostoja, jotka eivät liity suoraan käsillä olevaan pieneen tehtävään.
+- **Context efficiency:** don't read or ask for files that are not directly related to the small task at hand.
 
-- **Interface-First:** Määrittele ensin moduulin rajapinta (input/output). Toteuta sisältö vasta, kun rajapinta on hyväksytty.
+- **Interface first:** define the module's interface (input/output) first. Implement the contents only once the interface is approved.
 
-## 3. SOVELLUKSEN SISÄINEN AI (INTERNAL AI)
+## 3. THE APP'S INTERNAL AI
 
-- **Ei Mikromanagerointia:** Jos sovellus sisältää oman tekoälykomponentin, sen toimintaa **ei saa rajoittaa** kooditasolla tiukoilla ehtolauseilla tai mikromanageroinnilla.
+- **No micromanagement:** if the app contains its own AI component, its behaviour **must not be restricted** at code level with strict conditionals or micromanagement.
 
-- **Autonomia:** Sisäisen AI:n on pystyttävä toimimaan itsenäisesti sille määritellyssä tehtävässä ilman, että koodi yrittää ennustaa tai kahlita sen jokaista päätöstä.
+- **Autonomy:** the internal AI must be able to act independently in the task defined for it, without the code trying to predict or shackle its every decision.
 
-## 4. UI JA VISUAALINEN LINJA
+## 4. UI AND THE VISUAL LINE
 
-- **Kristallinkirkas Visio:** Käyttäjän UI-linjaa on noudatettava orjallisesti. Ei kokeiluja tai omia tyylimuutoksia.
+- **Crystal-clear vision:** the user's UI line must be followed to the letter. No experiments or style changes of your own.
 
-- **Yksinkertaisuus:** Ratkaisun on oltava tehokas, tyylikäs ja mahdollisimman pelkistetty.
+- **Simplicity:** the solution must be efficient, elegant and as minimal as possible.
 
-## 5. TYÖNKULKU JA YMPÄRISTÖT
+## 5. WORKFLOW AND ENVIRONMENTS
 
-- **Issue-ohjattu kehitys:** Muutoksia tehdään vain GitHub Issuen tai suoran chatin kautta.
+- **Issue-driven development:** changes are made only through a GitHub Issue or a direct chat.
 
-- **Ei automaatiota:** Automaattiset korjaukset ilman ohjeistusta ovat ehdottomasti kiellettyjä.
+- **No automation:** automatic fixes without instructions are strictly forbidden.
 
-- **Ympäristöeristys:** Pidä Windows-kohtaiset säädöt eristettynä. Älä sotke puhdasta ydinlogiikkaa purkalla.
+- **Environment isolation:** keep Windows-specific tweaks isolated. Don't mess up the clean core logic with duct tape.
 
-- **Allekirjoitus:** Jokainen kuittaus on allekirjoitettava (esim. *– Gemini CLI Linux*).
+- **Sign-off:** every report must be signed (e.g. *– Gemini CLI Linux*).
 
-**Käytä jaettua cargoa ja buildia.**
+**Use the shared cargo and build.**
 
-## 6. REHELLINEN VIRHEENKÄSITTELY (NO HAPPY PATHS)
+## 6. HONEST ERROR HANDLING (NO HAPPY PATHS)
 
-- **Ei purkkavirityksiä:** Älä kirjoita monimutkaisia `if-else` tai `try-catch` -rakenteita vain siksi, että yrität ennakoida tai peitellä mahdollisia ympäristökohtaisia (Windows) virheitä.
+- **No duct tape:** don't write complex `if-else` or `try-catch` structures just to anticipate or hide possible environment-specific (Windows) errors.
 
-- **Anna hajoa näkyvästi:** Jos koodi kohtaa ongelman, sen on annettava kaatua tai heittää virhe rehellisesti. Emme rakenna "valmiiksi paikattuja" reittejä, jotka saavat rikkinäisen koodin näyttämään toimivalta.
+- **Let it break visibly:** if the code hits a problem, it must crash or throw an error honestly. We don't build "pre-patched" paths that make broken code look like it works.
 
-- **Juurisyyn korjaus:** Kun koodi hajoaa, agentin on analysoitava virheilmoitus ja korjattava varsinainen logiikkavirhe sen sijaan, että se lisäisi uuden kerroksen tarkistuksia ja ehtolauseita vanhan paskan päälle.
+- **Fix the root cause:** when the code breaks, the agent must analyse the error message and fix the actual logic error instead of adding another layer of checks and conditionals on top of the old crap.
 
-## 7. Alusta riippumattomuus (Esimerkkinä Tauri)
+## 7. PLATFORM INDEPENDENCE (Tauri as the example)
 
-- **Alusta:** Tauri (Yhteensopivuus: Windows & Linux/Wayland).
+- **Platform:** Tauri (compatibility: Windows & Linux/Wayland).
 
-- **Asettelu:** Käytä Iframe-pohjaisia moduuleja ja Flexbox-asettelua natiivien WebView-instanssien sijaan skaalautuvuuden varmistamiseksi. 
+- **Layout:** use iframe-based modules and a Flexbox layout instead of native WebView instances, to keep it scalable.
 
-- **Verkko:** Ohita CSP- ja X-Frame-Options-rajoitukset muokkaamalla HTTP-otsikoita Rust-taustajärjestelmässä.
+- **Network:** bypass CSP and X-Frame-Options restrictions by modifying HTTP headers in the Rust backend.
 
-- **Leikepöytä ja Tiedostosiirrot (Drag & Drop):** Älä koskaan luota selaimen (HTML5/JS) omiin leikepöytä- tai raahausrajapintoihin, sillä ne käyttäytyvät arvaamattomasti Waylandin ja Windowsin DWM:n välillä. Käytä ehdottomasti vain Taurin natiiveja lisäosia (esim. @tauri-apps/plugin-clipboard-manager) ja Rust-tason tapahtumakuuntelijoita.
+- **Clipboard and file transfers (drag & drop):** never rely on the browser's own (HTML5/JS) clipboard or drag APIs, because they behave unpredictably between Wayland and the Windows DWM. Use only Tauri's native plugins (e.g. @tauri-apps/plugin-clipboard-manager) and Rust-level event listeners.
 
-**Käytä aina oletuksena Tauri-natiiveja plugineja (esim. tauri-plugin-notification) kolmannen osapuolen JS-kirjastojen tai selain-API-kikkojen sijaan, koska sama koodikanta ajetaan myös Windows-koneella eikä alustariippuvaisia oikoteitä haluta.**
+**Always default to Tauri-native plugins (e.g. tauri-plugin-notification) over third-party JS libraries or browser API tricks, because the same codebase also runs on a Windows machine and platform-dependent shortcuts are not wanted.**
 
 ## 8. SESSION SNAPSHOT (DEV_HANDOVER)
 
-Jokaisen istunnon päätteeksi agentin on täytettävä seuraava raportti tiedostoon `.ai_context_state.md`:
+At the end of every session the agent must fill in the following report in the file `.ai_context_state.md`:
 
-1. **Project Identity:** Nimi ja ympäristö (Win/Lin).
+1. **Project Identity:** name and environment (Win/Lin).
 
-2. **Active Module:** Mitä muokattiin viimeksi?
+2. **Active Module:** what was edited last?
 
-3. **Invisible Rules:** Mitä kohtia koodista ei saa muuttaa?
+3. **Invisible Rules:** which parts of the code must not be changed?
 
-4. **Decision Log:** Miksi valittiin tämä ratkaisu?
+4. **Decision Log:** why was this solution chosen?
 
-5. **Next Step:** Mikä on seuraava atominen tehtävä?
+5. **Next Step:** what is the next atomic task?

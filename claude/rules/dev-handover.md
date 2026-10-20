@@ -1,50 +1,56 @@
+Guide for tracking the state of a project.
 
-Ohje projektin tilan seurantaan.
+Applies to: ALL
 
-Koskee: KAIKKIA
+This is a strict, technical reporting protocol designed to minimise token use and
+maximise continuity, whether Gemini CLI or Codex is used or the operating system
+switches between Windows and Linux. It also minimises the "oh shit" moments caused
+by lost chat histories.
 
-Tässä on tiukka ja tekninen raportointi-protokolla, joka on suunniteltu minimoimaan token-kulutus ja maksimoimaan jatkuvuus riippumatta siitä, käytetäännkö Gemini CLI:tä, Codexia tai vaihdetaanko käyttöjärjestelmää Windowsin ja Linuxin välillä. Lisäksi minimoidaan chat keskustelujen tallennnusten hukkumisien aiheuttamat "hupsis saatanat".
-
-Tämä formaatti on optimoitu siten, että tekoäly saa yhdellä lukemisella (n. 500–1000 tokenia) saman tiedon, johon se muuten kuluttaisi kymmeniä tuhansia tokeneita haravoinnilla.
+The format is optimised so that the AI gets, in one read (about 500–1000 tokens),
+the same information it would otherwise spend tens of thousands of tokens raking
+through the codebase for.
 
 Dev_Handover Protocol (v1.0)
 
-Kopioi tämä osio istunnon päätteeksi ja pyydä tekoälyä täyttämään se. Tallenna vastaus projektin juureen tiedostona: .ai_context_state.md.
+Copy this section at the end of a session and ask the AI to fill it in. Save the
+answer in the project root as `.ai_context_state.md`.
 
 1. Project Identity & Environment
 
-Project Name: [Nimi]
+Project Name: [Name]
 
 OS Context: [Win (PowerShell/CMD) / Linux (Bash)]
 
-Last Commit/Hash: [Jos käytössä Git]
+Last Commit/Hash: [If Git is used]
 
-Critical Paths: [Esim. ./src/api, C:\Users\Project\bin]
+Critical Paths: [E.g. ./src/api, C:\Users\Project\bin]
 
 2. State of Architecture (The "Map")
 
-Active Module: [Mitä tiedostoa/moduulia muokattiin viimeksi?]
+Active Module: [Which file/module was edited last?]
 
-Key Dependencies: [Uudet kirjastot tai kriittiset versiot]
+Key Dependencies: [New libraries or critical versions]
 
-Global Variables/State: [Mitkä muuttujat vaikuttavat koko sovellukseen juuri nyt?]
+Global Variables/State: [Which variables affect the whole app right now?]
 
 3. Execution Snapshot
 
-Last Successful Command: [Tarkka komento esim. npm run dev tai go build]
+Last Successful Command: [Exact command, e.g. npm run dev or go build]
 
-Current Blocker/Error: [Jos jäit jumiin, tarkka virheilmoitus täähän]
+Current Blocker/Error: [If you got stuck, the exact error message here]
 
-Pending Refactors: [Mikä osa koodista on "rumaa" tai vaatii huomiota seuraavaksi?]
+Pending Refactors: [Which part of the code is "ugly" or needs attention next?]
 
 4. Logic & Hidden Context
 
-Invisible Rules: [Esim. "Älä koske tiedostoon X, se on legacya" tai "Käytä vain snake_casea tässä moduulissa"]
+Invisible Rules: [E.g. "Don't touch file X, it's legacy" or "Use only snake_case in this module"]
 
-Decision Log: [Miksi tehtiin valinta X eikä Y? (Estää tekoälyä ehdottamatta hylättyä ratkaisua uudelleen)]
+Decision Log: [Why was X chosen over Y? (Stops the AI from suggesting a rejected solution again)]
 
 5. Immediate Next Step
 
-Target: [Mitä pitää tapahtua ensimmäisenä, kun uusi istunto alkaa?]
+Target: [What must happen first when the new session starts?]
 
-Tehdään aina kun käyttäjä ilmoittaa istunnon päättyväksi tai ilmaisee että jatketaan myöhemmin/huomenna.
+Done whenever the user announces the session is ending or says work continues
+later/tomorrow.

@@ -1,41 +1,41 @@
-# Kone
+# Machine
 
 | | |
 |---|---|
-| Rauta | HP ProDesk 600 G3 DM: Pentium G4400T (2 ydintä), 14 GiB RAM |
+| Hardware | HP ProDesk 600 G3 DM: Pentium G4400T (2 cores), 14 GiB RAM |
 | OS | Ubuntu 26.10, kernel 7.3 |
-| Työpöytä | GNOME Shell 51, Wayland, vakio-Ubuntu-istunto |
-| Pääte | Ghostty + zsh (starship) |
-| Paketit | apt ja flatpak (snap poistettu), `cargo binstall` |
-| Käyttö | Tauri-sovellukset, GNOME Shell -laajennukset, selainlaajennukset |
+| Desktop | GNOME Shell 51, Wayland, stock Ubuntu session |
+| Terminal | Ghostty + zsh (starship) |
+| Packages | apt and flatpak (snap removed), `cargo binstall` |
+| Used for | Tauri apps, GNOME Shell extensions, browser extensions |
 
-Kone on vaatimaton, joten agentin ohjeissa (`skills/ubuntu`) sanotaan suoraan,
-ettei se käynnistä raskaita rinnakkaisbuildeja.
+The machine is modest, so the agent's instructions (`skills/ubuntu`) say outright
+not to start heavy parallel builds.
 
-## Jaettu Rust/Tauri-build
+## Shared Rust/Tauri build
 
 [`machine/cargo-config.toml`](../machine/cargo-config.toml) → `~/.cargo/config.toml`
 
-- **sccache:** jokainen riippuvuus (tokio, serde, tauri…) käännetään kerran, ja
-  seuraava projekti saa sen välimuistista.
-- **mold + clang:** isot GUI-binäärit linkittyvät moninkertaisesti nopeammin.
-- **dev-profiili:** `line-tables-only`-debug ja riippuvuudet `opt-level 2`:lla.
-- Työkalut asennetaan valmiina binääreinä komennolla `cargo binstall`
-  (tauri-cli, cargo-deb, cargo-generate-rpm), koska `cargo install` kääntäisi
-  ne kahdella ytimellä ikuisuuden.
-- Julkaisut tehdään .deb- ja .rpm-paketteina.
+- **sccache:** every dependency (tokio, serde, tauri…) is compiled once, and the
+  next project gets it from the cache.
+- **mold + clang:** large GUI binaries link several times faster.
+- **dev profile:** `line-tables-only` debug info and dependencies at `opt-level 2`.
+- Tools are installed as prebuilt binaries with `cargo binstall` (tauri-cli,
+  cargo-deb, cargo-generate-rpm), because `cargo install` would take forever to
+  compile them on two cores.
+- Releases are .deb and .rpm packages.
 
-## sudo agentille: `sudo -A` + yad
+## sudo for the agent: `sudo -A` + yad
 
-Salasanaton sudo ei ole käytössä. Agentti ajaa root-komennot muodossa
-`sudo -A ...`. `SUDO_ASKPASS` (asetettu `settings.json`:n `env`-kentässä)
-osoittaa skriptiin [`machine/sudo-askpass`](../machine/sudo-askpass), joka avaa
-pienen yad-ikkunan, jossa on pelkkä salasanakenttä.
+Passwordless sudo is not used. The agent runs root commands as `sudo -A ...`.
+`SUDO_ASKPASS` (set in the `env` field of `settings.json`) points to the script
+[`machine/sudo-askpass`](../machine/sudo-askpass), which opens a small yad window
+with just a password field.
 
-- Agentti kertoo **ennen** komentoa, mitä se tekee, koska ikkunassa näkyy vain
-  salasanakenttä.
-- Jos käyttäjä peruuttaa, agentti ei yritä uudelleen vaan kysyy.
-- Salasana ei koskaan päädy agentin kontekstiin.
+- The agent says what the command does **before** running it, because the window
+  shows only the password field.
+- If the user cancels, the agent doesn't retry; it asks.
+- The password never ends up in the agent's context.
 
 ```bash
 sudo apt install yad

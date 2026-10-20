@@ -7,7 +7,7 @@
     {
       "name": "selkea",
       "source": "./selkea",
-      "description": "Selkeämpi pääte-transkripti: nimetyt kehykset, hiljaiset välihuomiot, värillinen lihavointi ja vuoron loppuviiva."
+      "description": "Clearer terminal transcript: named frames, quiet notes between steps, coloured bold and a rule at the end of each turn."
     }
   ]
 }

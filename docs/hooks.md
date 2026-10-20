@@ -1,52 +1,56 @@
-# Hookit, statusline ja plugin
+# Hooks, statusline and plugin
 
-Hookit on määritelty tiedostossa
-[`claude/settings.example.json`](../claude/settings.example.json). Ne eivät
-ohjaa agenttia vaan kertovat työpöydälle, mitä agentti on tekemässä.
+The hooks are defined in
+[`claude/settings.example.json`](../claude/settings.example.json). They don't
+steer the agent; they tell the desktop what the agent is doing.
 
-## 1. Agentin tila GNOMEn yläpalkkiin
+## 1. Agent state in the GNOME top bar
 
-`~/Projects/gnome_plugin_agents/bin/claude-state-hook` kuuntelee tapahtumia
+`~/Projects/gnome_plugin_agents/bin/claude-state-hook` listens to the events
 `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`,
-`PermissionRequest`, `Notification`, `Stop`, `StopFailure` ja `SessionEnd`.
-Se kirjoittaa jokaisesta istunnosta tilatiedoston hakemistoon
+`PermissionRequest`, `Notification`, `Stop`, `StopFailure` and `SessionEnd`.
+It writes a state file for each session into
 `~/.local/state/understack/agents/sessions/`:
 
-| Tila | Milloin |
+| State | When |
 |---|---|
-| `working` | prompti lähetetty tai työkalu käynnissä |
-| `idle` | vuoro päättyi, agentti odottaa |
-| `attention` | lupakysely tai kysymys odottaa käyttäjää |
+| `working` | prompt submitted or a tool running |
+| `idle` | the turn ended, the agent is waiting |
+| `attention` | a permission prompt or question is waiting for the user |
 
-GNOME Shell -laajennus (Claude Status) seuraa hakemistoa ja vaihtaa yläpalkin
-ikonia. Kun agentti odottaa vastausta, sen huomaa vaikka toinen ikkuna olisi
-päällä. Hook ei koskaan pysäytä Claudea: se palauttaa aina 0 eikä tulosta mitään.
+A GNOME Shell extension (Claude Status) watches the directory and changes the
+top-bar icon. When the agent is waiting for an answer, you notice it even with
+another window on top. The hook never blocks Claude: it always exits 0 and prints
+nothing.
 
-Samassa laajennuksessa on **errwatch**: se seuraa journalia, kirjoittaa
-kaatuneista palveluista ja työpöydän virheistä incident-tiedoston ja antaa sen
-Claudelle muodossa "lue tämä, etsi syy, ehdota korjausta". Agentti diagnosoi ja
-kysyy ennen kuin muuttaa järjestelmää.
+The same extension has **errwatch**: it watches the journal, writes an incident
+file for crashed services and desktop errors, and hands it to Claude as "read
+this, find the cause, propose a fix". The agent diagnoses and asks before changing
+the system.
 
-## 2. Ghostty-ilmoitukset ja statusline
+## 2. Ghostty notifications and statusline
 
-`~/.local/share/ghostex/hooks/agent-shell-notify.sh` on kaikissa tapahtumissa
-mukana. Se näyttää päätteessä ilmoituksen, kun agentti tarvitsee käyttäjää tai
-lopettaa. `agent-statusline.sh` piirtää statusrivin. Molemmat tulevat
-Ghostex-työkalusta. Jos sitä ei ole, nämä rivit voi poistaa asetuksista.
+`~/.local/share/ghostex/hooks/agent-shell-notify.sh` runs on every event. It shows
+a notification in the terminal when the agent needs the user or finishes.
+`agent-statusline.sh` draws the status line. Both come from the Ghostex tool; if
+you don't have it, remove those lines from the settings.
 
-## 3. selkea-plugin
+## 3. The selkea plugin
 
-[`plugins/selkea`](../plugins/selkea) on Claude Coden mod, joka tekee
-transkriptista luettavamman:
+[`plugins/selkea`](../plugins/selkea) ("selkeä" is Finnish for "clear") is a
+Claude Code mod that makes the transcript easier to read:
 
-- omat viestit ja Clauden vastaukset nimetyissä kehyksissä (Sinä / Claude)
-- lyhyet välihuomiot himmeinä riveinä
-- lihavointi värillä (turkoosi, vihreä, violetti tai pois)
-- jokaisen vuoron lopussa viiva ja vuoron kesto
+- your messages and Claude's answers in named frames (`language`: `fi` = Sinä /
+  Claude, `en` = You / Claude)
+- short notes between steps as dim lines
+- bold text in colour (`bold`: `turkoosi` = cyan, `vihreä` = green, `violetti` =
+  magenta, `pois` = off)
+- a rule with the turn's duration at the end of every turn
+- `boxes`: `vastaukset` frames only multi-line answers, `kaikki` frames everything
 
-Asetukset (`boxes`, `language`, `bold`) valitaan pluginin asetuksista.
-Marketplace on hakemistotyyppinen, joten muokkaukset tulevat voimaan komennolla
-`/reload-plugins` ilman uudelleenasennusta.
+The option values are Finnish because the code matches on them. The marketplace is
+a directory marketplace, so edits take effect with `/reload-plugins` without
+reinstalling.
 
 ```bash
 claude plugin validate plugins/selkea

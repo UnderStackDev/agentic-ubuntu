@@ -1,42 +1,42 @@
-# Työnkulku
+# Workflow
 
 ```
-istunto alkaa
-  └─ .ai_context_state.md olemassa? → lue se ensin (dev-handover)
-pyyntö chatissa tai GitHub Issuessa
-  └─ architect-protocol latautuu
-       1. suunnitelma: mitä muuttuu, mitkä tiedostot, uusien moduulien rajapinnat, riskit
-       2. käyttäjä hyväksyy (tai korjaa)
-       3. toteutus kokonaan, moduuli kerrallaan, ilman askelkohtaisia lupia
-       4. tarkistus: build / testit / ajetaan oikeasti
-       5. paikallinen commit
-istunto loppuu ("lopetetaan", "jatketaan huomenna")
-  └─ dev-handover: .ai_context_state.md päivitetään ja commitoidaan
-"valmis" → vasta nyt push / release
+session starts
+  └─ .ai_context_state.md exists? → read it first (dev-handover)
+request in chat or a GitHub Issue
+  └─ architect-protocol loads
+       1. plan: what changes, which files, interfaces of new modules, risks
+       2. the user approves (or corrects)
+       3. full implementation, one module at a time, no per-step permission
+       4. check: build / tests / actually run it
+       5. local commit
+session ends ("lopetetaan", "jatketaan huomenna")
+  └─ dev-handover: .ai_context_state.md is updated and committed
+"valmis" (done) → only now push / release
 ```
 
-## Poikkeukset
+## Exceptions
 
-- **Triviaali korjaus** (kirjoitusvirhe, yksi rivi) tehdään suoraan ilman
-  suunnitelmaa.
-- **"suorita" / "ohita luvat"** ohittaa suunnitelmavaiheen.
-- **Käyttäjälle kuuluva päätös** kesken toteutuksen (uusi kirjasto, UI-muutos,
-  arkkitehtuuri) kysytään, vaikka suunnitelma olisi jo hyväksytty.
+- **A trivial fix** (typo, one line) is done directly without a plan.
+- **"suorita" / "ohita luvat"** (run it / skip permissions) skips the plan step.
+- **A decision that belongs to the user** in the middle of implementation (a new
+  library, a UI change, architecture) is asked about even if the plan was already
+  approved.
 
-## Handover-tiedosto
+## The handover file
 
-Pohja: [`templates/.ai_context_state.md`](../templates/.ai_context_state.md).
-Tiedosto on lyhyt ja pelkkää faktaa: polut, komennot, viimeisin virhe,
-päätösloki ja seuraava atominen tehtävä. Päätösloki estää hylättyjä ratkaisuja
-palaamasta seuraavassa istunnossa.
+Template: [`templates/.ai_context_state.md`](../templates/.ai_context_state.md).
+The file is short and facts only: paths, commands, the latest error, a decision
+log and the next atomic task. The decision log stops rejected solutions from
+coming back in the next session.
 
-**Miksi:** chat-historia katoaa, agentti ja käyttöjärjestelmä vaihtuvat, mutta
-projektin juuressa oleva tiedosto säilyy. Sen lukemiseen kuluu noin tuhat
-tokenia, kun koodikannan haravointiin menisi kymmeniä tuhansia.
+**Why:** chat history gets lost and the agent and the OS change, but a file in the
+project root stays. Reading it takes about a thousand tokens, where raking through
+the codebase would take tens of thousands.
 
-## Muisti
+## Memory
 
-Claude Coden oma muisti (`~/.claude/projects/*/memory/`) tallentaa koneesta ja
-käyttäjästä asioita, jotka eivät näy koodista: miten kone on säädetty, mitä
-käyttäjä on aiemmin korjannut ja mitkä projektit ovat käynnissä. Muistitiedostot
-ovat henkilökohtaisia, joten ne eivät ole tässä repossa.
+Claude Code's own memory (`~/.claude/projects/*/memory/`) stores things about the
+machine and the user that the code doesn't show: how the machine is set up, what
+the user has corrected before and which projects are in progress. Memory files are
+personal, so they aren't in this repo.

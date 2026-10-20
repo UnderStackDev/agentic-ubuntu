@@ -1,67 +1,67 @@
-# Periaatteet
+# Principles
 
-Koko teksti: [`claude/rules/project-rules.md`](../claude/rules/project-rules.md)
-(Architect Protocol v3.1). Tässä on lyhennelmä ja syyt sen takana.
+Full text: [`claude/rules/project-rules.md`](../claude/rules/project-rules.md)
+(Architect Protocol v3.1). This is a summary with the reasons behind it.
 
-## 1. Roolit
+## 1. Roles
 
-Käyttäjä on arkkitehti, agentti suorittaa. Agentti ei tee omin päin päätöksiä
-arkkitehtuurista, kirjastoista eikä UI:sta.
+The user is the architect; the agent executes. The agent doesn't make decisions
+about architecture, libraries or the UI by itself.
 
-**Miksi:** agentti tekee mielellään "parannuksia", joita kukaan ei pyytänyt.
-Selkeä roolijako pitää koodikannan sellaisena kuin sen omistaja haluaa.
+**Why:** an agent likes to make "improvements" nobody asked for. A clear split of
+roles keeps the codebase the way its owner wants it.
 
-## 2. Vahvistuspakko koskee suunnitelmaa, ei askelia
+## 2. Approval applies to the plan, not to every step
 
-Suunnitelma esitetään ja hyväksytetään ennen koodia. Hyväksynnän jälkeen agentti
-toteuttaa sen kokonaan eikä kysy enää jokaisesta askeleesta erikseen. Uudelleen
-kysytään vain, jos suunnitelma osoittautuu vääräksi tai vastaan tulee päätös,
-joka kuuluu käyttäjälle.
+The plan is presented and approved before any code. After approval the agent
+implements it in full and doesn't ask about each step separately. It asks again
+only if the plan turns out to be wrong or a decision comes up that belongs to the
+user.
 
-**Miksi:** jatkuva luvan kysely on yhtä huonoa kuin sen kokonaan puuttuminen.
-Yksi hyväksyntäkohta pitää ihmisen ohjaimissa ja agentin työssä.
+**Why:** constant permission prompts are as bad as none at all. One approval point
+keeps the human in control and the agent working.
 
-## 3. Pienet moduulit
+## 3. Small modules
 
-Yksi funktio tai moduuli kerrallaan. Tiedostot pysyvät lyhyinä (noin 150 riviä)
-ja pilkotaan, kun logiikka paisuu. Rajapinta (input/output) määritellään ennen
-toteutusta. Agentti lukee vain ne tiedostot, jotka liittyvät tehtävään.
+One function or module at a time. Files stay short (about 150 lines) and are split
+when the logic grows. The interface (input/output) is defined before the
+implementation. The agent reads only the files relevant to the task.
 
-**Miksi:** pieni tiedosto mahtuu kontekstiin kokonaan, ja muutos on helppo
-tarkistaa. Lisäksi tokeneita kuluu vähemmän.
+**Why:** a small file fits in the context whole, and a change is easy to review.
+It also uses fewer tokens.
 
-## 4. Ei happy path -purkkaa
+## 4. No happy-path duct tape
 
-Ei try/catch- tai if-else-kerroksia, joilla peitetään ympäristövirheitä.
-Koodi saa kaatua näkyvästi, virheilmoitus luetaan ja juurisyy korjataan.
+No try/catch or if-else layers that hide environment errors. Code may crash
+visibly; the error message is read and the root cause is fixed.
 
-**Miksi:** "valmiiksi paikattu" koodi näyttää toimivalta, vaikka se on rikki, ja
-jokainen purkkakerros vaikeuttaa seuraavaa korjausta.
+**Why:** "pre-patched" code looks like it works when it's broken, and every layer
+of duct tape makes the next fix harder.
 
-## 5. Sovelluksen oma AI saa olla autonominen
+## 5. The app's own AI may be autonomous
 
-Jos sovelluksessa on oma tekoälykomponentti, sitä ei kahlita kooditason
-ehtolauseilla. Sille annetaan tehtävä, ei käsikirjoitusta.
+If an app has its own AI component, it isn't shackled with code-level
+conditionals. It gets a task, not a script.
 
-## 6. Alustanatiivit rajapinnat
+## 6. Platform-native APIs
 
-Tauri-sovelluksissa käytetään Taurin natiiveja plugineja (leikepöytä,
-ilmoitukset, drag & drop) eikä selaimen API-kikkoja, jotka käyttäytyvät eri
-tavoin Waylandissa ja Windowsissa. GNOME-puolella käytetään GNOMEn omia
-rajapintoja.
+Tauri apps use Tauri's native plugins (clipboard, notifications, drag & drop)
+instead of browser API tricks that behave differently on Wayland and Windows.
+On GNOME, GNOME's own APIs are used.
 
-## 7. UI-linja on käyttäjän
+## 7. The UI line belongs to the user
 
-Visuaalinen kieli ([Aura UI -manifesto](../claude/rules/aura-ui-manifesto.md),
-"Midnight Glass") noudatetaan sellaisenaan. Agentti ei kokeile omia tyylejä.
+The visual language ([Aura UI manifesto](../claude/rules/aura-ui-manifesto.md),
+"Midnight Glass") is followed as is. The agent doesn't experiment with its own
+styles.
 
-## 8. Paikallinen ensin
+## 8. Local first
 
-Työ tehdään paikallisesti ja commitoidaan iteroidessa. Push ja julkaisu tehdään
-vasta, kun käyttäjä sanoo työn olevan valmis.
+Work is done locally and committed while iterating. Pushes and releases happen
+only when the user says the work is done.
 
-## 9. Allekirjoitus
+## 9. Sign-off
 
-Jokainen agentin raportti päättyy allekirjoitukseen (*– Claude Ubuntu Linux*).
-Kun samoissa projekteissa käytetään useita agentteja ja koneita (Claude Code,
-Gemini CLI, Codex; Ubuntu ja Fedora), allekirjoituksesta näkee, kuka mitäkin teki.
+Every agent report ends with a sign-off (*– Claude Ubuntu Linux*). When several
+agents and machines work on the same projects (Claude Code, Gemini CLI, Codex;
+Ubuntu and Fedora), the sign-off shows who did what.

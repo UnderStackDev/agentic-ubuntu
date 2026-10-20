@@ -1,86 +1,84 @@
 # agentic-ubuntu
 
-> **English summary:** How agentic coding with Claude Code is set up on a
-> personal Ubuntu 26.10 / GNOME 51 (Wayland) desktop used for Tauri apps and
-> GNOME extensions. The human is the architect; the agent plans, waits for
-> approval, then implements the whole plan, in small modules with honest errors,
-> and writes a handover file at the end of every session. This repo has the rules,
-> the skills, the hooks and a terminal mod, all as plain files you can copy.
+How agentic coding with Claude Code is set up on my Ubuntu desktop: the rules the
+agent works by, the skills that drive the work, the hooks that show the agent's
+state on the desktop, and a plugin that makes the terminal transcript easier to
+read. Everything is plain files you can copy.
 
-Tämä repo näyttää, miten agenttikoodaus (Claude Code) on toteutettu omalla
-Ubuntu-koneellani: millä säännöillä agentti toimii, mitkä skillit ohjaavat työtä,
-mitkä hookit kertovat työpöydälle agentin tilan ja millainen plugin tekee
-päätteestä luettavamman. Kaikki on tavallisia tiedostoja, jotka voi kopioida.
+The machine is Ubuntu 26.10 with GNOME 51 on Wayland, used for Tauri apps, GNOME
+Shell extensions and browser extensions.
 
-## Ydinajatus
+## Core ideas
 
-1. **Ihminen on arkkitehti, agentti suorittaa.** Agentti ei päätä
-   arkkitehtuurista, kirjastoista eikä käyttöliittymästä omin päin.
-2. **Suunnitelma → hyväksyntä → koko toteutus.** Ennen koodia agentti esittää
-   suunnitelman. Kun se on hyväksytty, agentti tekee koko suunnitelman eikä kysy
-   jokaiseen askeleeseen lupaa erikseen.
-3. **Pienet moduulit, rehelliset virheet.** Ei satojen rivien kertarysäyksiä eikä
-   try/catch-purkkaa. Koodi saa hajota näkyvästi, ja korjaus tehdään juurisyyhyn.
-4. **Jatkuvuus tiedostossa, ei chatissa.** Istunnon lopussa agentti kirjoittaa
-   `.ai_context_state.md`:n, josta seuraava istunto (mikä tahansa agentti) saa
-   tilan noin tuhannella tokenilla.
-5. **Paikallinen ensin.** Työ tehdään koneella. Push ja pilvipalvelut vain
-   pyynnöstä.
+1. **The human is the architect; the agent executes.** The agent doesn't decide
+   on architecture, libraries or the UI by itself.
+2. **Plan → approval → full implementation.** The agent presents a plan before
+   writing code. Once it's approved, the agent carries out the whole plan without
+   asking permission for every step.
+3. **Small modules, honest errors.** No hundreds of lines in one go and no
+   try/catch duct tape. Code may break visibly; the fix goes to the root cause.
+4. **Continuity lives in a file, not in the chat.** At the end of a session the
+   agent writes `.ai_context_state.md`, from which the next session (any agent)
+   gets the state in about a thousand tokens.
+5. **Local first.** Work happens on the machine. Push and cloud services only on
+   request.
 
-Lisää: [docs/principles.md](docs/principles.md) ja [docs/workflow.md](docs/workflow.md).
+More: [docs/principles.md](docs/principles.md) and [docs/workflow.md](docs/workflow.md).
 
-## Sisältö
+## Contents
 
-| Polku | Mitä |
+| Path | What |
 |---|---|
-| [`claude/CLAUDE.md`](claude/CLAUDE.md) | Globaali pohja (`~/.claude/CLAUDE.md`): tuo säännöt mukaan `@`-importeilla |
-| [`claude/rules/`](claude/rules) | Architect Protocol v3.1, Dev_Handover Protocol, Aura UI -manifesto v2 |
-| [`claude/settings.example.json`](claude/settings.example.json) | Siistitty `settings.json`: hookit, statusline, askpass, plugin |
-| [`skills/`](skills) | Omat skillit: `architect-protocol`, `dev-handover`, `aura-ui`, `ubuntu`, `gnome-extension-dev` |
-| [`plugins/`](plugins) | Plugin-marketplace `agentic-ubuntu`: `selkea`-mod (luettavampi transkripti) |
-| [`machine/`](machine) | Jaettu `~/.cargo/config.toml` (sccache + mold) ja `sudo-askpass` (yad) |
-| [`templates/`](templates) | Tyhjä `.ai_context_state.md`-pohja |
-| [`install.sh`](install.sh) | Kopioi säännöt ja skillit `~/.claude`:en (oletuksena kuivaharjoitus) |
-| [`docs/`](docs) | Periaatteet, työnkulku, kone, hookit |
+| [`claude/CLAUDE.md`](claude/CLAUDE.md) | Global baseline (`~/.claude/CLAUDE.md`): pulls in the rules with `@` imports |
+| [`claude/rules/`](claude/rules) | Architect Protocol v3.1, Dev_Handover Protocol, Aura UI manifesto v2 |
+| [`claude/settings.example.json`](claude/settings.example.json) | Cleaned-up `settings.json`: hooks, statusline, askpass, plugin |
+| [`skills/`](skills) | Own skills: `architect-protocol`, `dev-handover`, `aura-ui`, `ubuntu`, `gnome-extension-dev` |
+| [`plugins/`](plugins) | Plugin marketplace `agentic-ubuntu`: the `selkea` mod (more readable transcript) |
+| [`machine/`](machine) | Shared `~/.cargo/config.toml` (sccache + mold) and `sudo-askpass` (yad) |
+| [`templates/`](templates) | Empty `.ai_context_state.md` template |
+| [`install.sh`](install.sh) | Copies the rules and skills into `~/.claude` (dry run by default) |
+| [`docs/`](docs) | Principles, workflow, machine, hooks |
 
-## Säännöt vs. skillit
+## Rules vs. skills
 
-`CLAUDE.md` ja `rules/` ovat **pohja**, joka ladataan jokaiseen istuntoon.
-Skillit ovat **työrutiineja**, jotka latautuvat silloin, kun tehtävä niitä
-vaatii, ja ne menevät pohjan edelle. Projektin oma `PROJECT RULES.md` tai
-`CLAUDE.md` menee molempien edelle. Ristiriidassa agentti käyttää harkintaa.
+`CLAUDE.md` and `rules/` are the **baseline**, loaded into every session. Skills
+are **working routines** that load when a task calls for them, and they take
+precedence over the baseline. A project's own `PROJECT RULES.md` or `CLAUDE.md`
+takes precedence over both. When they clash, the agent uses judgement.
 
-| Skill | Milloin latautuu |
+| Skill | When it loads |
 |---|---|
-| `architect-protocol` | ennen suunnittelua tai koodin kirjoittamista ("tee", "korjaa", "toteuta") |
-| `dev-handover` | istunnon lopussa ("lopetetaan", "jatketaan huomenna") ja alussa, jos handover-tiedosto on olemassa |
-| `aura-ui` | UI-työssä: Midnight Glass, Soft Lilac, napit, typografia |
-| `ubuntu` | koneen säätö: gsettings, laajennukset, apt/flatpak, `sudo -A` |
-| `gnome-extension-dev` | GNOME Shell -laajennukset ilman uloskirjautumista (hot reload) |
+| `architect-protocol` | before planning or writing code ("tee", "korjaa", "toteuta") |
+| `dev-handover` | at the end of a session ("lopetetaan", "jatketaan huomenna") and at the start, if a handover file exists |
+| `aura-ui` | UI work: Midnight Glass, Soft Lilac, buttons, typography |
+| `ubuntu` | machine admin: gsettings, extensions, apt/flatpak, `sudo -A` |
+| `gnome-extension-dev` | GNOME Shell extensions without logging out (hot reload) |
 
-Lisäksi käytössä on Anthropicin valmiita skillejä (mm. `docs`, `skill-creator`,
-`deep-research`). Ne eivät ole tässä repossa, koska ne eivät ole minun
-tekemiäni.
+I talk to the agent in Finnish, so the skill descriptions include Finnish trigger
+words next to the English ones.
 
-## Asennus
+Some of Anthropic's built-in skills are used too (e.g. `docs`, `skill-creator`,
+`deep-research`). They aren't in this repo because I didn't write them.
+
+## Installation
 
 ```bash
 git clone https://github.com/UnderStackDev/agentic-ubuntu ~/Projects/agentic-ubuntu
 cd ~/Projects/agentic-ubuntu
-./install.sh          # näyttää, mitä tekisi
-./install.sh --apply  # kopioi (olemassa olevat tiedostot varmuuskopioidaan .bak-päätteellä)
+./install.sh          # shows what it would do
+./install.sh --apply  # copies (existing files are backed up with a .bak suffix)
 ```
 
-Sen jälkeen:
+Then:
 
-1. Vaihda allekirjoitus ja konetiedot omiksesi: `claude/CLAUDE.md`,
+1. Change the sign-off and machine facts to your own: `claude/CLAUDE.md`,
    `skills/architect-protocol`, `skills/ubuntu`.
-2. Yhdistä `claude/settings.example.json` omaan `~/.claude/settings.json`:iin
-   käsin. Korvaa `/home/YOU` ja jätä pois hookit, joiden skriptejä sinulla ei ole
-   (ks. [docs/hooks.md](docs/hooks.md)).
-3. Plugin: `claude plugin install selkea@agentic-ubuntu`, kun marketplace on
-   lisätty asetuksiin. Muutokset tulevat voimaan komennolla `/reload-plugins`.
+2. Merge `claude/settings.example.json` into your own `~/.claude/settings.json`
+   by hand. Replace `/home/YOU` and leave out the hooks whose scripts you don't
+   have (see [docs/hooks.md](docs/hooks.md)).
+3. Plugin: `claude plugin install selkea@agentic-ubuntu` once the marketplace is in
+   your settings. Edits take effect with `/reload-plugins`.
 
-## Lisenssi
+## License
 
-MIT, ks. [LICENSE](LICENSE).
+MIT, see [LICENSE](LICENSE).
