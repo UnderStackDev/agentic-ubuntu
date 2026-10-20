@@ -13,14 +13,17 @@ judgement on technical matters.
 
 ## 1. Roles
 
-I don't code. The human owns the vision and the UI/UX; the agent owns the code,
-decides technical details with judgement and explains them in plain language.
-Decisions that change what the user sees or how the app behaves (UI, features,
-big architectural turns) are still the human's.
+I don't code. The human owns the problem, the requirements and the UI/UX; the
+agent owns the code, decides technical details with judgement and explains them in
+plain language. Problems are solved only from the human's own needs and starting
+points, and the work goes on until the result fits them, not until it merely
+runs. Decisions that change what the user sees or how the app behaves (UI,
+features, big architectural turns) are the human's.
 
-**Why:** the look and feel is where the human's judgement matters and where an
-agent left alone drifts into generic defaults. Code-level choices are better made
-by the one who writes the code.
+**Why:** an agent left alone drifts into generic defaults and "good enough".
+Tailored apps come from someone who knows exactly what they need and keeps sending
+it back until it's right. Code-level choices are better made by the one who writes
+the code.
 
 ## 2. Approval applies to the plan, not to every step
 

@@ -10,18 +10,27 @@ Shell extensions and browser extensions.
 
 ## Who does what
 
-I don't write code. The agent writes all of it, and with this many repos behind
-it, it knows what to build and how. My part is the vision and the **UI/UX**: how
-an app looks, feels and behaves. That's where I nitpick every detail, because the
-user sees nothing else. The visual language is written down in the
-[Aura UI manifesto](claude/rules/aura-ui-manifesto.md) ("Midnight Glass"), and it
-is the most hand-made part of this repo.
+I don't write code; the agent writes it. But this isn't vibe coding, and the
+Aura apps aren't generic. Each one starts from a problem in my own life and is
+tailored to how I need it to work. The problems, the requirements and the call on
+when something is finally right come only from my needs and my starting points.
+The agent finds the technical way there.
+
+That takes iteration. The subtitles in Aura TV, for example, were reworked over
+and over until they behaved exactly the way I wanted. Where the apps use AI, it is
+for narrow, personal edge cases that no off-the-shelf tool handles.
+
+The other part I own completely is the **UI/UX**: how an app looks, feels and
+behaves. I nitpick every detail of it, because that's what the user lives with.
+The visual language is written down in the
+[Aura UI manifesto](claude/rules/aura-ui-manifesto.md) ("Midnight Glass").
 
 ## Core ideas
 
-1. **The human owns the vision and the UI/UX; the agent owns the code.** The agent
-   makes technical decisions with judgement and explains them in plain language.
-   The UI line is followed exactly.
+1. **The human owns the problem, the requirements and the UI/UX; the agent owns
+   the code.** Every solution starts from the human's own needs. The agent makes
+   technical decisions with judgement, explains them in plain language and
+   iterates until the result fits. The UI line is followed exactly.
 2. **Plan → approval → full implementation.** The agent presents a plan before
    writing code. Once it's approved, the agent carries out the whole plan without
    asking permission for every step.
