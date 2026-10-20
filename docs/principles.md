@@ -3,13 +3,24 @@
 Full text: [`claude/rules/project-rules.md`](../claude/rules/project-rules.md)
 (Architect Protocol v3.1). This is a summary with the reasons behind it.
 
+## A note on the Architect Protocol
+
+The protocol was written for Gemini CLI, which needed a short leash: it drifted,
+made "improvements" nobody asked for and patched over errors. Hence the blunt
+"Dictator & Architect / Servant" wording. With Claude Code the protocol is only the
+baseline; the [skills](../skills) loosen it, and the agent is trusted to use
+judgement on technical matters.
+
 ## 1. Roles
 
-The user is the architect; the agent executes. The agent doesn't make decisions
-about architecture, libraries or the UI by itself.
+I don't code. The human owns the vision and the UI/UX; the agent owns the code,
+decides technical details with judgement and explains them in plain language.
+Decisions that change what the user sees or how the app behaves (UI, features,
+big architectural turns) are still the human's.
 
-**Why:** an agent likes to make "improvements" nobody asked for. A clear split of
-roles keeps the codebase the way its owner wants it.
+**Why:** the look and feel is where the human's judgement matters and where an
+agent left alone drifts into generic defaults. Code-level choices are better made
+by the one who writes the code.
 
 ## 2. Approval applies to the plan, not to every step
 

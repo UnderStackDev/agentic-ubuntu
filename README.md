@@ -8,10 +8,20 @@ read. Everything is plain files you can copy.
 The machine is Ubuntu 26.10 with GNOME 51 on Wayland, used for Tauri apps, GNOME
 Shell extensions and browser extensions.
 
+## Who does what
+
+I don't write code. The agent writes all of it, and with this many repos behind
+it, it knows what to build and how. My part is the vision and the **UI/UX**: how
+an app looks, feels and behaves. That's where I nitpick every detail, because the
+user sees nothing else. The visual language is written down in the
+[Aura UI manifesto](claude/rules/aura-ui-manifesto.md) ("Midnight Glass"), and it
+is the most hand-made part of this repo.
+
 ## Core ideas
 
-1. **The human is the architect; the agent executes.** The agent doesn't decide
-   on architecture, libraries or the UI by itself.
+1. **The human owns the vision and the UI/UX; the agent owns the code.** The agent
+   makes technical decisions with judgement and explains them in plain language.
+   The UI line is followed exactly.
 2. **Plan → approval → full implementation.** The agent presents a plan before
    writing code. Once it's approved, the agent carries out the whole plan without
    asking permission for every step.
