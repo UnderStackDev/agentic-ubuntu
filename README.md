@@ -24,6 +24,10 @@ I trust that, because the whole flow stays readable to me: the issue says what w
 asked, the plan says what was agreed, the commits say what was done and the report
 says where things stand.
 
+The way of working itself was built the same way. The rules, the skills, the
+hooks and this repo were all made together with Claude, session by session.
+It's the clearest example I have of the idea behind all of it: work it together.
+
 That takes iteration. The subtitles in Aura TV, for example, were reworked over
 and over until they behaved exactly the way I wanted. Where the apps use AI, it is
 for narrow, personal edge cases that no off-the-shelf tool handles.
