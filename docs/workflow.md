@@ -34,6 +34,17 @@ coming back in the next session.
 project root stays. Reading it takes about a thousand tokens, where raking through
 the codebase would take tens of thousands.
 
+## Agents picking up each other's work
+
+No single session holds the project. A GitHub Issue states the task, the
+approved plan and the commits record what was done, and `.ai_context_state.md`
+records where things stand. Any Claude agent, on any day, can read those and
+continue where the previous one stopped.
+
+For the human this means two things: nothing has to be re-explained, and every
+step can be followed without reading code. Issue → plan → commits → handover is a
+trail anyone can read.
+
 ## Memory
 
 Claude Code's own memory (`~/.claude/projects/*/memory/`) stores things about the

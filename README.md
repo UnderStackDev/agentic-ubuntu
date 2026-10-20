@@ -14,7 +14,15 @@ I don't write code; the agent writes it. But this isn't vibe coding, and the
 Aura apps aren't generic. Each one starts from a problem in my own life and is
 tailored to how I need it to work. The problems, the requirements and the call on
 when something is finally right come only from my needs and my starting points.
-The agent finds the technical way there.
+The agent owns the code, but as a collaboration, inside a way of working we have
+agreed on together: the rules and skills in this repo.
+
+That way of working is what makes the Aura system work for me. Work is tracked in
+GitHub Issues, and every session ends with a handover report, so one Claude agent
+can pick up exactly where another left off, without me re-explaining anything.
+I trust that, because the whole flow stays readable to me: the issue says what was
+asked, the plan says what was agreed, the commits say what was done and the report
+says where things stand.
 
 That takes iteration. The subtitles in Aura TV, for example, were reworked over
 and over until they behaved exactly the way I wanted. Where the apps use AI, it is
@@ -28,9 +36,10 @@ The visual language is written down in the
 ## Core ideas
 
 1. **The human owns the problem, the requirements and the UI/UX; the agent owns
-   the code.** Every solution starts from the human's own needs. The agent makes
-   technical decisions with judgement, explains them in plain language and
-   iterates until the result fits. The UI line is followed exactly.
+   the code, within a jointly agreed way of working.** Every solution starts from
+   the human's own needs. The agent makes technical decisions with judgement,
+   explains them in plain language and iterates until the result fits. The UI
+   line is followed exactly.
 2. **Plan → approval → full implementation.** The agent presents a plan before
    writing code. Once it's approved, the agent carries out the whole plan without
    asking permission for every step.
