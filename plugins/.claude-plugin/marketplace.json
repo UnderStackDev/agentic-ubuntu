@@ -1,0 +1,13 @@
+{
+  "name": "agentic-ubuntu",
+  "owner": {
+    "name": "Satu"
+  },
+  "plugins": [
+    {
+      "name": "selkea",
+      "source": "./selkea",
+      "description": "Selkeämpi pääte-transkripti: nimetyt kehykset, hiljaiset välihuomiot, värillinen lihavointi ja vuoron loppuviiva."
+    }
+  ]
+}

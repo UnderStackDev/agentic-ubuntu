@@ -1,0 +1,23 @@
+# Shared Cargo setup for every Rust/Tauri project on this machine.
+# The box is a 2-core Pentium, so the aim is to compile each crate once.
+
+[build]
+# Cache compiled crates across projects: a dependency already built for one
+# project (tokio, serde, tauri, ...) comes from the cache in the next one.
+# Cache lives in ~/.cache/sccache (default 10 GB); `sccache -s` shows stats.
+rustc-wrapper = "sccache"
+
+[target.x86_64-unknown-linux-gnu]
+# mold links large GUI binaries (GPUI, Tauri/WebKit) several times faster
+# than the default ld.
+linker = "clang"
+rustflags = ["-C", "link-arg=-fuse-ld=mold"]
+
+[profile.dev]
+# Smaller debug info: faster links and a lot less disk per project.
+debug = "line-tables-only"
+
+[profile.dev.package."*"]
+# Dependencies optimized once (and cached by sccache); own code stays fast
+# to rebuild.
+opt-level = 2

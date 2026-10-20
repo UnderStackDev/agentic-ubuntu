@@ -1,0 +1,45 @@
+{
+  "name": "selkea",
+  "version": "0.1.0",
+  "description": "Selkeämpi pääte-transkripti: omat viestisi ja Clauden vastaukset nimetyissä kehyksissä, välihuomiot hiljaisina riveinä, lihavointi värillä ja jokaisen vuoron lopussa viiva kestoineen.",
+  "keywords": [
+    "readability",
+    "layout",
+    "terminal",
+    "transcript"
+  ],
+  "userConfig": {
+    "boxes": {
+      "type": "string",
+      "title": "Kehystettävä Clauden teksti",
+      "description": "vastaukset kehystää vain useampirivisiä vastauksia; kaikki kehystää kaiken mitä Claude kirjoittaa",
+      "default": "vastaukset",
+      "options": [
+        "vastaukset",
+        "kaikki"
+      ]
+    },
+    "language": {
+      "type": "string",
+      "title": "Kehysten otsikot",
+      "description": "fi: Sinä / Claude, en: You / Claude",
+      "default": "fi",
+      "options": [
+        "fi",
+        "en"
+      ]
+    },
+    "bold": {
+      "type": "string",
+      "title": "Lihavoidun tekstin väri",
+      "description": "turkoosi, vihreä tai violetti värittää lihavoinnin päätteen omalla sävyllä; pois jättää sen tavalliseksi lihavoinniksi",
+      "default": "turkoosi",
+      "options": [
+        "turkoosi",
+        "vihreä",
+        "violetti",
+        "pois"
+      ]
+    }
+  }
+}

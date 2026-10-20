@@ -1,0 +1,8 @@
+#!/bin/sh
+# Graphical password prompt for `sudo -A` (SUDO_ASKPASS), used by Claude Code.
+# Icon + password field only: Enter = OK, Esc = cancel.
+# GDK_BACKEND=x11: on Wayland GNOME ignores --center/--on-top for native windows.
+icon="$HOME/.local/share/icons/claude-code-64.svg"
+GDK_BACKEND=x11 exec yad --entry --hide-text --undecorated --center --on-top \
+    --no-buttons --image="$icon" --image-on-top --window-icon="$icon" \
+    --width=380 --borders=28 --title=" "

@@ -1,0 +1,274 @@
+{
+  "cleanupPeriodDays": 36500,
+  "env": {
+    "SUDO_ASKPASS": "/home/YOU/.local/bin/sudo-askpass"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.local/share/ghostex/hooks/agent-statusline.sh",
+    "padding": 0
+  },
+  "theme": "dark",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "GHOSTEX_AGENT='claude' ~/.local/share/ghostex/hooks/agent-shell-notify.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/Projects/gnome_plugin_agents/bin/claude-state-hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "GHOSTEX_AGENT='claude' ~/.local/share/ghostex/hooks/agent-shell-notify.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/Projects/gnome_plugin_agents/bin/claude-state-hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "GHOSTEX_AGENT='claude' ~/.local/share/ghostex/hooks/agent-shell-notify.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/Projects/gnome_plugin_agents/bin/claude-state-hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "GHOSTEX_AGENT='claude' ~/.local/share/ghostex/hooks/agent-shell-notify.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/Projects/gnome_plugin_agents/bin/claude-state-hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "GHOSTEX_AGENT='claude' ~/.local/share/ghostex/hooks/agent-shell-notify.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/Projects/gnome_plugin_agents/bin/claude-state-hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "GHOSTEX_AGENT='claude' ~/.local/share/ghostex/hooks/agent-shell-notify.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/Projects/gnome_plugin_agents/bin/claude-state-hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "GHOSTEX_AGENT='claude' ~/.local/share/ghostex/hooks/agent-shell-notify.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/Projects/gnome_plugin_agents/bin/claude-state-hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "GHOSTEX_AGENT='claude' ~/.local/share/ghostex/hooks/agent-shell-notify.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "GHOSTEX_AGENT='claude' ~/.local/share/ghostex/hooks/agent-shell-notify.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "TeammateIdle": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "GHOSTEX_AGENT='claude' ~/.local/share/ghostex/hooks/agent-shell-notify.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "GHOSTEX_AGENT='claude' ~/.local/share/ghostex/hooks/agent-shell-notify.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/Projects/gnome_plugin_agents/bin/claude-state-hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "GHOSTEX_AGENT='claude' ~/.local/share/ghostex/hooks/agent-shell-notify.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "GHOSTEX_AGENT='claude' ~/.local/share/ghostex/hooks/agent-shell-notify.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/Projects/gnome_plugin_agents/bin/claude-state-hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostCompact": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "GHOSTEX_AGENT='claude' ~/.local/share/ghostex/hooks/agent-shell-notify.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "extraKnownMarketplaces": {
+    "agentic-ubuntu": {
+      "source": {
+        "source": "directory",
+        "path": "/home/YOU/Projects/agentic-ubuntu/plugins"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "selkea@agentic-ubuntu": true
+  }
+}
