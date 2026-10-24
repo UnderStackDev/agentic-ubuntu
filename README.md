@@ -66,7 +66,7 @@ More: [docs/principles.md](docs/principles.md) and [docs/workflow.md](docs/workf
 | [`claude/settings.example.json`](claude/settings.example.json) | Cleaned-up `settings.json`: hooks, statusline, askpass, plugin |
 | [`skills/`](skills) | Own skills: `architect-protocol`, `dev-handover`, `aura-ui`, `ubuntu`, `gnome-extension-dev` |
 | [`plugins/`](plugins) | Plugin marketplace `agentic-ubuntu`: the `selkea` mod (more readable transcript) |
-| [`machine/`](machine) | Shared `~/.cargo/config.toml` (sccache + mold) and `sudo-askpass` (yad) |
+| [`machine/`](machine) | Shared `~/.cargo/config.toml` (sccache + mold), `sudo-askpass` (yad) and the rtw88 Wi-Fi fix |
 | [`templates/`](templates) | Empty `.ai_context_state.md` and the per-repo `aura-context` skill |
 | [`docs/history/`](docs/history) | The original Architect Protocol v3.1, written for Gemini CLI |
 | [`install.sh`](install.sh) | Symlinks or copies the rules and skills into `~/.claude` (dry run by default) |

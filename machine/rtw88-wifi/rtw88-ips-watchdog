@@ -1,0 +1,26 @@
+#!/bin/bash
+# Resets the rtw88 USB Wi-Fi stick when the chip fails to wake from idle
+# ("failed to leave ips state"); without this it stays dead until reboot.
+set -u
+DRIVER=rtw88_8822bu
+COOLDOWN=30
+last=0
+
+reset_stick() {
+    for intf in /sys/bus/usb/drivers/$DRIVER/*:*; do
+        [ -e "$intf" ] || continue
+        dev=$(basename "$(readlink -f "$intf/..")")
+        echo "chip stuck in idle, resetting USB device $dev"
+        echo 0 > "/sys/bus/usb/devices/$dev/authorized"
+        sleep 2
+        echo 1 > "/sys/bus/usb/devices/$dev/authorized"
+    done
+}
+
+journalctl -k -f -n0 -o cat | while read -r line; do
+    [[ $line == *"$DRIVER"*"failed to leave ips state"* ]] || continue
+    now=$(date +%s)
+    (( now - last < COOLDOWN )) && continue
+    last=$now
+    reset_stick
+done

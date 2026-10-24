@@ -1,0 +1,11 @@
+[Unit]
+Description=Reset rtw88 USB Wi-Fi when it fails to leave idle state
+After=systemd-journald.service
+
+[Service]
+ExecStart=/usr/local/bin/rtw88-ips-watchdog
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
